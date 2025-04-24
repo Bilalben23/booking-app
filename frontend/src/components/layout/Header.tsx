@@ -12,19 +12,26 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "../ui/dropdown-menu";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { openDialog, setAuthMode } from "@/features/auth/state/authSlice";
 
 
 const Header = () => {
+
+    const dispatch = useDispatch<AppDispatch>();
+
     return (
-        <header className="flex items-center justify-between py-2.5 px-10">
+        <header className="flex items-center justify-between py-2.5 px-12 shadow-sm">
             <div>
-                <a href="#">
+                <Link to="/">
                     <img
                         src={fullLogo}
                         alt="Airbnb Logo"
                         className="w-24"
                     />
-                </a>
+                </Link>
             </div>
 
             <div className="flex items-center shadow-md rounded-full space-x-4 px-3 py-1.5 border">
@@ -34,7 +41,6 @@ const Header = () => {
                 <Separator orientation="vertical" className="!h-7" />
                 <div>
                     <p className="font-semibold">Any week</p>
-
                 </div>
                 <Separator orientation="vertical" className="!h-7" />
                 <div>
@@ -48,9 +54,8 @@ const Header = () => {
 
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="outline">
+                    <Button variant="outline" className="py-5 b border-gray-300">
                         <Menu className="size-5" />
-
                         <div className="relative">
                             <Avatar>
                                 <AvatarImage src="https://www.flaticon.com/free-icons/user" alt="avatar" />
@@ -64,27 +69,32 @@ const Header = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48" align="end" >
                     <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                            <a href="/signup" className="font-semibold">Signup</a>
+                        <DropdownMenuItem asChild>
+                            <button
+                                className="font-semibold w-full"
+                                onClick={() => {
+                                    dispatch(setAuthMode("register"));
+                                    dispatch(openDialog());
+                                }}>Sign up</button>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <a href="/signin">Log in</a>
+                        <DropdownMenuItem asChild>
+                            <button className="w-full" onClick={() => dispatch(openDialog())}>Log in</button>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
 
                     <DropdownMenuSeparator />
 
                     <DropdownMenuGroup>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                             <a href="/signup">Gift Card</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                             <a href="/signin">Airbnb your home</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                             <a href="/signin">Host an experience</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem asChild>
                             <a href="/signin">Help center</a>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

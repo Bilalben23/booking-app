@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.HOME} element={<MainLayout />}>
-          <Route index element={<h1>Home page</h1>} />
+          <Route index element={<h1 className="py-[500px]">Home page</h1>} />
 
           {/* Other routes */}
         </Route>
