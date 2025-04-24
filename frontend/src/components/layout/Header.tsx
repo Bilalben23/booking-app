@@ -17,7 +17,6 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { openDialog, setAuthMode } from "@/features/auth/state/authSlice";
 
-
 const Header = () => {
 
     const dispatch = useDispatch<AppDispatch>();

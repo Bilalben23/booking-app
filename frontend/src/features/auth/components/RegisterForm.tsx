@@ -76,7 +76,7 @@ const RegisterForm = () => {
                     )}
                 />
 
-                <Button type="submit" size="full" variant="destructive" className="w-full">
+                <Button type="submit" size="full" variant="destructive" className="w-full rounded-md">
                     Register
                 </Button>
             </form>

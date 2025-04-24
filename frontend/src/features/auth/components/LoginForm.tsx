@@ -57,7 +57,7 @@ const LoginForm = () => {
                     )}
                 />
 
-                <Button type="submit" size="full" variant="destructive" className="w-full">
+                <Button type="submit" size="full" variant="destructive" className="w-full rounded-md">
                     Login
                 </Button>
             </form>
