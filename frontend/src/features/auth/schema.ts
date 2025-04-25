@@ -1,37 +1,27 @@
-import { z } from "zod"
+import { z } from "zod";
 
-export const loginSchema = z.object({
-    email: z.string()
-        .email({
-            message: "Invalid email address"
-        }),
-    password: z.string()
-        .min(1, {
-            message: "Password is required"
-        })
-});
-
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
 
 export const registerSchema = z.object({
-    name: z.string()
-        .min(2, {
-            message: "Name must be at least 2 characters"
-        }).
-        max(30, {
-            message: "Name must be at most 30 characters",
-        }),
-    email: z.string()
-        .email({
-            message: "Invalid email address"
-        }),
+    name: z.string({ required_error: "Name is required", invalid_type_error: "Name must be a string" })
+        .min(3, { message: "Name should be at least 3 characters" })
+        .max(50, { message: "Name cannot exceed 100 characters" })
+    ,
+    email: z.string({ required_error: "Email is required", invalid_type_error: "Email must be a string" })
+        .email("Invalid email address"),
     password: z.string()
-        .min(8, {
-            message: "Password must be at least 8 characters"
+        .min(6, "Password should be at least 6 characters long")
+        .refine((password) => passwordRegex.test(password), {
+            message: "Password must contain at least 1 uppercase, 1 lowercase, and 1 number.",
         })
-        .regex(/(?=.*[A-Z])/, {
-            message: "Password must contain at least one uppercase letter",
-        })
-        .regex(/(?=.*\d)/, {
-            message: "Password must contain at least one number",
-        })
+})
+
+
+export const loginSchema = z.object({
+    email: z.string({
+        required_error: "Email is required"
+    }).email("Invalid email address"),
+    password: z.string({
+        required_error: "Password is required"
+    }).min(6, "Password should be at least 6 characters long")
 })

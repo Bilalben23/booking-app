@@ -96,7 +96,7 @@ export const refreshToken = async (req: Request, res: Response) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                image: user.image
+                image: user?.image
             }
         })
 

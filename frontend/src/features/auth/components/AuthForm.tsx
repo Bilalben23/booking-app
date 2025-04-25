@@ -16,7 +16,7 @@ const AuthForm = () => {
     const toggleAuthMode = () => {
         dispatch(setAuthMode(authMode === "login" ? "register" : "login"))
     }
-
+ 
     return (
         <div className="space-y-3">
             {isLogin ? <LoginForm /> : <RegisterForm />}
