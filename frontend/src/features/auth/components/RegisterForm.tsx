@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { closeDialog, setCredentials } from "../state/authSlice";
 import { toast } from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
+import axios from "axios";
 import {
     Form,
     FormControl,
@@ -17,8 +19,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { DotLoader, BeatLoader } from "react-spinners";
-import axios from "axios";
 
 
 const RegisterResponseSchema = z.object({
