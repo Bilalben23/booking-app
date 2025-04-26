@@ -6,6 +6,8 @@ export interface IUser extends Document {
     password?: string; // only for JWT(local) strategy
     image?: string;
     provider: "local" | "google" | "facebook" | "apple";
+    providerId?: string;
+    emailVerified?: boolean;
 }
 
 
@@ -32,6 +34,13 @@ const UserSchema = new Schema<IUser>({
         type: String,
         enum: ["local", "google", "facebook", "apple"],
         default: "local"
+    },
+    providerId: {
+        type: String
+    },
+    emailVerified: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

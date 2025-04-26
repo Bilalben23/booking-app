@@ -3,6 +3,7 @@ import { AuthService } from "./auth.service.ts";
 import { UserService } from "../user/user.service.ts";
 import { ENV_VARS } from "@/config/env.ts";
 import { JwtService } from "@/utils/jwt.ts";
+import { IUser } from "../user/user.model.ts";
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -115,5 +116,48 @@ export const refreshToken = async (req: Request, res: Response) => {
             success: false,
             message: err.message || 'Something went wrong',
         })
+    }
+}
+
+
+export const googleCallback = (req: Request, res: Response) => {
+    try {
+        const user = req.user as IUser;
+
+        if (!user) {
+            res.status(401).json({
+                success: false,
+                message: "Authentication failed"
+            })
+            return;
+        }
+
+        const accessToken = JwtService.signAccessToken((user._id as string).toString());
+        const refreshToken = JwtService.signRefreshToken((user._id as string).toString());
+
+        res.cookie("refreshToken", refreshToken, {
+            httpOnly: true,
+            secure: ENV_VARS.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        })
+
+        res.status(200).json({
+            success: true,
+            message: "Authenticated with Google successfully!",
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                image: user?.image
+            },
+            accessToken,
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: (err as Error).message || "Something went wrong",
+        });
     }
 }

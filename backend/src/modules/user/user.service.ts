@@ -14,5 +14,9 @@ export class UserService {
     static async getUserById(userId: string): Promise<IUser | null> {
         return await User.findById(userId);
     }
+
+    static async findUserByProviderId(providerId: string): Promise<IUser | null> {
+        return await User.findOne({ providerId });
+    }
 }
 
