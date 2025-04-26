@@ -1,8 +1,14 @@
-// components/auth/RegisterForm.tsx
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { registerSchema } from "../schema";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { axiosInstance } from "@/lib/axiosInstance";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { closeDialog, setCredentials } from "../state/authSlice";
+import { toast } from "react-hot-toast";
 import {
     Form,
     FormControl,
@@ -11,8 +17,21 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { DotLoader, BeatLoader } from "react-spinners";
+import axios from "axios";
+
+
+const RegisterResponseSchema = z.object({
+    success: z.boolean(),
+    message: z.string(),
+    user: z.object({
+        id: z.string(),
+        name: z.string(),
+        email: z.string()
+    }),
+    accessToken: z.string()
+})
+
 
 const RegisterForm = () => {
     const form = useForm<z.infer<typeof registerSchema>>({
@@ -23,12 +42,47 @@ const RegisterForm = () => {
             password: ""
         }
     });
+    const dispatch = useDispatch<AppDispatch>();
 
-    const onSubmit = (values: z.infer<typeof registerSchema>) => {
 
-        // TODO: send the data to the backend to register the user
+    const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+        try {
+            const { data } = await axiosInstance.post("v1/auth/register", values);
 
-        console.log("Register Values:", values);
+            const parsed = RegisterResponseSchema.safeParse(data);
+
+            if (!parsed.success) {
+                console.error("Invalid register response: ", parsed.error.format());
+                toast.error("Invalid server response. Please contact support.");
+                return;
+            }
+
+            dispatch(setCredentials({
+                user: parsed.data.user,
+                accessToken: parsed.data.accessToken
+            }))
+            dispatch(closeDialog());
+            toast.success(parsed.data.message);
+
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                const response = err.response?.data;
+
+                if (response?.errors) {
+                    // handle validation errors
+                    response.errors.forEach((validationError: { field: "name" | "email" | "password"; msg: string }) => {
+                        form.setError(validationError.field, { message: validationError.msg });
+                    })
+                    return;
+                } else if (response?.message) {
+                    toast.error(response.message);
+                } else {
+                    toast.error("An unknown error occurred.");
+                }
+            } else {
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        }
     };
 
     return (
@@ -41,7 +95,10 @@ const RegisterForm = () => {
                         <FormItem>
                             <FormLabel>Name</FormLabel>
                             <FormControl>
-                                <Input placeholder="Your name" {...field} />
+                                <Input
+                                    placeholder="Your name"
+                                    readOnly={form.formState.isSubmitting}
+                                    {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -55,7 +112,11 @@ const RegisterForm = () => {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="bilal@example.com" {...field} />
+                                <Input
+                                    type="email"
+                                    placeholder="bilal@example.com"
+                                    readOnly={form.formState.isSubmitting}
+                                    {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -69,15 +130,30 @@ const RegisterForm = () => {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input type="password" placeholder="••••••••" {...field} />
+                                <Input
+                                    type="password"
+                                    placeholder="••••••••"
+                                    readOnly={form.formState.isSubmitting}
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
 
-                <Button type="submit" size="full" variant="destructive" className="w-full rounded-md">
-                    Register
+                <Button
+                    type="submit"
+                    size="full"
+                    variant="destructive"
+                    className="w-full rounded-md"
+                    disabled={form.formState.isSubmitting || !form.formState.isDirty}
+                >
+                    {
+                        form.formState.isSubmitting
+                            ? <BeatLoader size={10} color="#fff" />
+                            : "Register"
+                    }
                 </Button>
             </form>
         </Form>

@@ -22,7 +22,7 @@ const useRefreshToken = () => {
 
     const refresh = async () => {
         try {
-            const { data } = await axiosInstance.get("v1/api/auth/refresh-token");
+            const { data } = await axiosInstance.get("v1/auth/refresh-token");
 
             const parsed = RefreshResponseSchema.safeParse(data);
 

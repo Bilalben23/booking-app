@@ -18,12 +18,14 @@ const AuthDialog = () => {
         <Dialog open={isDialogOpen} onOpenChange={() => dispatch(closeDialog())} modal >
             <DialogContent className="p-0 rounded-2xl overflow-hidden">
                 <DialogHeader>
-                    <DialogTitle className="px-5 py-3.5 border-b">
+                    <DialogTitle className="px-5 py-3.5 border-b" asChild>
                         <h1 className="font-bold text-xl text-center">Log in or sign up</h1>
                     </DialogTitle>
-                    <DialogDescription className="px-5 py-3 max-h-[80vh] overflow-y-auto">
-                        <p className="text-black font-bold text-2xl mb-3">Welcome to Airbnb</p>
-                        <AuthForm />
+                    <DialogDescription asChild >
+                        <div className="px-5 py-3 max-h-[80vh] overflow-y-auto">
+                            <p className="text-black font-bold text-2xl mb-3">Welcome to Airbnb</p>
+                            <AuthForm />
+                        </div>
                     </DialogDescription>
                 </DialogHeader>
             </DialogContent>
