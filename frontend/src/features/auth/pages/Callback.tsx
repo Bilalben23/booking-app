@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { openDialog, setCredentials, User } from '../state/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { BeatLoader, ClipLoader } from 'react-spinners';
+import { BeatLoader } from 'react-spinners';
 
 const Callback = () => {
     const dispatch = useDispatch<AppDispatch>();

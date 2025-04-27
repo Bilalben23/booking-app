@@ -34,4 +34,12 @@ router.get(
 )
 
 
+router.get("/something", authenticateJWT, (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: "Hello, world!"
+    })
+})
+
+
 export default router;
