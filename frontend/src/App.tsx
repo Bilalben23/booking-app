@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { ROUTES } from "./router/routes";
+import Callback from "./features/auth/pages/Callback";
+
 
 const App = () => {
 
@@ -8,10 +10,13 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path={ROUTES.HOME} element={<MainLayout />}>
-          <Route index element={<h1 className="py-[500px]">Home page</h1>} />
+          <Route index element={<div> Home page </div>} />
+
 
           {/* Other routes */}
         </Route>
+        <Route path="/callback" element={<Callback />} />
+
       </Routes>
     </BrowserRouter>
   );

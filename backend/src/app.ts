@@ -4,6 +4,7 @@ import cors from "cors";
 import routes from "routes/index.ts";
 import passport from "@/config/passport.ts";
 import cookieParser from "cookie-parser";
+import { ENV_VARS } from "./config/env.ts";
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.use(cookieParser());
 app.use(helmet());
 
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: [ENV_VARS.FRONTEND_URL],
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true

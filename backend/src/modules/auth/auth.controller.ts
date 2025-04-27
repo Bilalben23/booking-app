@@ -28,7 +28,7 @@ export const registerUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(err.status || 500).json({
             success: false,
-            message: err.message || "something went wrong"
+            message: (err as Error).message || "Internal Server Error"
         });
     }
 }
@@ -57,7 +57,7 @@ export const loginUser = async (req: Request, res: Response) => {
     } catch (err: any) {
         res.status(err.status || 500).json({
             success: false,
-            message: err.message || 'Something went wrong',
+            message: (err as Error).message || 'Internal Server Error',
         });
     }
 }
@@ -66,7 +66,6 @@ export const loginUser = async (req: Request, res: Response) => {
 export const refreshToken = async (req: Request, res: Response) => {
     try {
         const refreshToken = req.cookies.refreshToken;
-        console.log()
 
         if (!refreshToken) {
             res.status(401).json({
@@ -111,11 +110,42 @@ export const refreshToken = async (req: Request, res: Response) => {
             return;
         }
 
-
         res.status(err.status || 500).json({
             success: false,
-            message: err.message || 'Something went wrong',
+            message: (err as Error).message || 'Internal Server Error',
         })
+    }
+}
+
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+    try {
+        const user = req.user as IUser;
+
+        if (!user) {
+            res.status(401).json({
+                success: false,
+                message: 'Unauthorized: No valid token provided or user not found.',
+            });
+            return;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'User fetched successfully',
+            data: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                image: user?.image
+            }
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: (err as Error).message || 'Internal server error',
+        });
     }
 }
 
@@ -142,22 +172,18 @@ export const googleCallback = (req: Request, res: Response) => {
             maxAge: 7 * 24 * 60 * 60 * 1000,
         })
 
-        res.status(200).json({
-            success: true,
-            message: "Authenticated with Google successfully!",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                image: user?.image
-            },
-            accessToken,
-        });
+        const userData = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            image: user.image
+        }
 
+        res.redirect(`${ENV_VARS.FRONTEND_URL}/callback?accessToken=${accessToken}&user=${JSON.stringify(userData)}`);
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: (err as Error).message || "Something went wrong",
-        });
+            message: (err as Error).message || "Internal Server Error",
+        })
     }
 }

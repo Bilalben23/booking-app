@@ -18,6 +18,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { BeatLoader } from "react-spinners";
 
 
 const LoginResponseSchema = z.object({
@@ -115,8 +116,18 @@ const LoginForm = () => {
                     )}
                 />
 
-                <Button type="submit" size="full" variant="destructive" className="w-full rounded-md">
-                    Login
+                <Button
+                    type="submit"
+                    size="full"
+                    variant="destructive"
+                    className="w-full rounded-md"
+                    disabled={form.formState.isSubmitting || !form.formState.isDirty}
+                >
+                    {
+                        form.formState.isSubmitting
+                            ? <BeatLoader size={10} color="#fff" />
+                            : "Register"
+                    }
                 </Button>
             </form>
         </Form>

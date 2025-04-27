@@ -6,8 +6,10 @@ import {
     loginUser,
     registerUser,
     refreshToken,
+    getCurrentUser,
     googleCallback
 } from "./auth.controller.ts";
+import { authenticateJWT } from "@/middlewares/authenticateJwt.ts";
 
 
 const router = Router();
@@ -18,8 +20,11 @@ router.post("/login", validateSchema(loginSchema), loginUser);
 
 router.get("/refresh-token", refreshToken);
 
+router.get("/me", authenticateJWT, getCurrentUser);
+
 router.get("/google", passport.authenticate("google", {
-    scope: ["profile", "email"]
+    scope: ["profile", "email"],
+    session: false
 }));
 
 router.get(

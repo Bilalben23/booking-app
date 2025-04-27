@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthMode = "login" | "register";
 
-interface User {
+export interface User {
     id: string;
     name: string;
     email: string;
