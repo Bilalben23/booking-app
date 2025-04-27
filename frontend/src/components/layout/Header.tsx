@@ -13,12 +13,12 @@ import {
     DropdownMenuTrigger
 } from "../ui/dropdown-menu";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
 import { openDialog, setAuthMode } from "@/features/auth/state/authSlice";
 
 const Header = () => {
-
+    const { user } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
 
     return (
@@ -57,7 +57,7 @@ const Header = () => {
                         <Menu className="size-5" />
                         <div className="relative">
                             <Avatar>
-                                <AvatarImage src="https://www.flaticon.com/free-icons/user" alt="avatar" />
+                                <AvatarImage src={user?.image} alt="avatar" />
                                 <AvatarFallback>
                                     <User strokeWidth={2.3} />
                                 </AvatarFallback>
@@ -84,23 +84,22 @@ const Header = () => {
                     <DropdownMenuSeparator />
 
                     <DropdownMenuGroup>
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem asChild disabled>
                             <a href="/signup">Gift Card</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem asChild disabled>
                             <a href="/signin">Airbnb your home</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem asChild disabled>
                             <a href="/signin">Host an experience</a>
                         </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
+                        <DropdownMenuItem asChild disabled>
                             <a href="/signin">Help center</a>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>
-
     );
 }
 

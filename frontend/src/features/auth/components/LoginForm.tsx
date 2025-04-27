@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { axiosInstance } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "@/store/store";
 import { closeDialog, setCredentials } from "../state/authSlice";
 import axios from "axios";
+import { BeatLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 import {
     Form,
     FormControl,
@@ -18,7 +20,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { BeatLoader } from "react-spinners";
 
 
 const LoginResponseSchema = z.object({
@@ -42,6 +43,8 @@ const LoginForm = () => {
         },
     });
     const dispatch = useDispatch<AppDispatch>();
+    const { redirectPath } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
 
 
     const onSubmit = async (values: z.infer<typeof loginSchema>) => {
@@ -62,6 +65,7 @@ const LoginForm = () => {
             }))
             dispatch(closeDialog());
             toast.success(parsed.data.message);
+            navigate(redirectPath)
 
         } catch (err) {
             if (axios.isAxiosError(err)) {
