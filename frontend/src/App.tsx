@@ -4,6 +4,7 @@ import { ROUTES } from "./router/routes";
 import Callback from "./features/auth/pages/Callback";
 import HomePage from "./features/home/pages/HomePage";
 import PersistLogin from "./components/PersistLogin";
+import NotFound from "./features/notFound/NotFound";
 
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
         </Route>
 
         <Route path="/callback" element={<Callback />} />
-
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
     </BrowserRouter>

@@ -22,7 +22,6 @@ export default function HomePage() {
             <Button onClick={async () => await getData()}>Load data</Button>
             <p>user id: {user?.id}</p>
             <p>user name: {user?.name}</p>
-            <p>user name: {user?.name}</p>
             <p>user email: {user?.email}</p>
             <p>user image: <img src={user?.image} alt="avatar" /></p>
         </div>
