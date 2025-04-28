@@ -118,38 +118,6 @@ export const refreshToken = async (req: Request, res: Response) => {
 }
 
 
-export const getCurrentUser = async (req: Request, res: Response) => {
-    try {
-        const user = req.user as IUser;
-
-        if (!user) {
-            res.status(401).json({
-                success: false,
-                message: 'Unauthorized: No valid token provided or user not found.',
-            });
-            return;
-        }
-
-        res.status(200).json({
-            success: true,
-            message: 'User fetched successfully',
-            data: {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                image: user?.image
-            }
-        })
-
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: (err as Error).message || 'Internal server error',
-        });
-    }
-}
-
-
 export const googleCallback = (req: Request, res: Response) => {
     try {
         const user = req.user as IUser;
@@ -186,4 +154,19 @@ export const googleCallback = (req: Request, res: Response) => {
             message: (err as Error).message || "Internal Server Error",
         })
     }
+}
+
+
+export const logoutUser = (req: Request, res: Response) => {
+    res.clearCookie("refreshToken", {
+        httpOnly: true,
+        secure: ENV_VARS.NODE_ENV === "production",
+        sameSite: "strict",
+    });
+
+
+    res.status(200).json({
+        success: true,
+        message: "User logged out successfully"
+    })
 }

@@ -23,23 +23,24 @@ const PersistLogin = () => {
             }
         }
 
-        !accessToken ? verifyRefreshToken() : setIsLoading(false);
-    }, [])
+        if (!accessToken) {
+            verifyRefreshToken();
+        } else {
+            setIsLoading(false);
+        }
+
+    }, [accessToken, refresh])
 
 
+    if (isLoading) {
+        return (
+            <div className="flex items-center justify-center w-full h-screen">
+                <BeatLoader size={20} />
+            </div>
+        );
+    }
 
-    return (
-        <>
-            {
-                isLoading
-                    ? <div className="flex items-center justify-center w-full h-screen">
-                        <BeatLoader size={20} />
-                    </div>
-                    : <Outlet />
-            }
-        </>
-    )
-
+    return <Outlet />;
 }
 
 export default PersistLogin;
