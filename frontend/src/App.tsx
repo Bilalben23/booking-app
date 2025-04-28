@@ -6,11 +6,13 @@ import HomePage from "./features/home/pages/HomePage";
 import PersistLogin from "./components/PersistLogin";
 import NotFound from "./features/not-found/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Profile from "./features/account/pages/ProfilePage";
+import AccountLayout from "./features/account/layouts/AccountLayout";
+import ProfilePage from "./features/account/pages/ProfilePage";
+import BookingsPage from "./features/account/pages/BookingsPage";
+import PlacesPage from "./features/account/pages/PlacesPage";
 
 
 const App = () => {
-
   return (
     <BrowserRouter>
       <Routes>
@@ -19,14 +21,20 @@ const App = () => {
             <Route index element={<HomePage />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="/profile" element={<Profile />} />
+
+              <Route path={ROUTES.ACCOUNT.ROOT} element={<AccountLayout />} >
+                <Route index element={<ProfilePage />} />
+                <Route path={ROUTES.ACCOUNT.BOOKINGS} element={<BookingsPage />} />
+                <Route path={ROUTES.ACCOUNT.PLACES} element={<PlacesPage />} />
+              </Route>
+
             </Route>
 
             {/* Other routes */}
           </Route>
         </Route>
 
-        <Route path="/callback" element={<Callback />} />
+        <Route path={ROUTES.CALLBACK} element={<Callback />} />
         <Route path="*" element={<NotFound />} />
 
       </Routes>

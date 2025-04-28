@@ -1,11 +1,7 @@
-import { ROUTES } from "@/router/routes";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
 type AuthMode = "login" | "register";
-
-export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
-
 
 export interface User {
     id: string;
@@ -20,7 +16,7 @@ interface AuthState {
     isAuthenticated: boolean;
     isDialogOpen: boolean;
     authMode: AuthMode;
-    redirectPath: RoutePath
+    redirectPath: string
 }
 
 const initialState: AuthState = {
@@ -29,7 +25,7 @@ const initialState: AuthState = {
     isAuthenticated: false,
     isDialogOpen: false,
     authMode: "login",
-    redirectPath: ROUTES.HOME
+    redirectPath: "/"
 }
 
 const authSlice = createSlice({
@@ -56,7 +52,7 @@ const authSlice = createSlice({
         setAuthMode: (state, action: PayloadAction<AuthMode>) => {
             state.authMode = action.payload;
         },
-        setRedirectPath(state, action: PayloadAction<RoutePath>) {
+        setRedirectPath(state, action: PayloadAction<string>) {
             state.redirectPath = action.payload;
         },
     }

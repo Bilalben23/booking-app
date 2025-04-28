@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Profile() {
+export default function ProfilePage() {
     return (
         <div>
-            <h1>Profile  goes here</h1>
+
         </div>
     )
 }
