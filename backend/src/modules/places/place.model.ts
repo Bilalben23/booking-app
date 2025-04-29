@@ -7,10 +7,30 @@ export interface IPlace extends Document {
     pricePerNight: number;
     images: string[];
     hostId: Types.ObjectId;
-    checkIn: number;
-    checkOut: number;
+    checkIn: string;
+    checkOut: string;
     maxGuests: number;
+    perks: {
+        name: string;
+        available: boolean
+    }[];
 }
+
+const predefinedPerks = [
+    "Free WiFi",
+    "Swimming Pool",
+    "Parking",
+    "Air Conditioning",
+    "Pet Friendly",
+    "Gym Access",
+    "Free Breakfast",
+    "Hot Tub",
+    "Kitchen",
+    "Washer/Dryer",
+    "Smart TV",
+    "Free Parking",
+    "Fireplace"
+];
 
 
 const placeSchema = new Schema({
@@ -46,16 +66,17 @@ const placeSchema = new Schema({
         max: 23
     },
     checkOut: {
-        type: Number,
-        required: true,
-        min: 0,
-        max: 23
+        type: String,
+        required: true
     },
     maxGuests: {
-        type: Number,
-        required: true,
-        min: 1,
-    }
+        type: String,
+        required: true
+    },
+    perks: {
+        type: [String],
+        default: predefinedPerks
+    },
 }, { timestamps: true });
 
 

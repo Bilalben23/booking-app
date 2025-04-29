@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { BeatLoader } from 'react-spinners';
 import { RootState } from '@/store/store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
 import { Verified } from 'lucide-react';
 export default function ProfilePage() {
     const { user } = useSelector((state: RootState) => state.auth);
@@ -45,6 +45,7 @@ export default function ProfilePage() {
                     disabled={isPending}
                 >
                     Logout {isPending && <BeatLoader color='#fff' size={7} />}
+                    <LogOut />
                 </Button>
             </div>
         </div>

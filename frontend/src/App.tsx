@@ -10,6 +10,7 @@ import AccountLayout from "./features/account/layouts/AccountLayout";
 import ProfilePage from "./features/account/pages/ProfilePage";
 import BookingsPage from "./features/account/pages/BookingsPage";
 import PlacesPage from "./features/account/pages/PlacesPage";
+import CreatePlacePage from "./features/account/pages/CreatePlacePage";
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
                 <Route index element={<ProfilePage />} />
                 <Route path={ROUTES.ACCOUNT.BOOKINGS} element={<BookingsPage />} />
                 <Route path={ROUTES.ACCOUNT.PLACES} element={<PlacesPage />} />
+                <Route path={ROUTES.ACCOUNT.NEW_PLACE} element={<CreatePlacePage />} />
               </Route>
 
             </Route>

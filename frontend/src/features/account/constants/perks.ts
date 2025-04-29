@@ -1,0 +1,31 @@
+import {
+    Wifi,
+    ParkingCircle,
+    Snowflake,
+    PawPrint,
+    Dumbbell,
+    Coffee,
+    Tv,
+    Car,
+    Flame,
+    Bath,
+    Soup,
+    BedDouble,
+    WashingMachine,
+} from "lucide-react"
+
+export const perks = [
+    { label: "Free WiFi", icon: Wifi },
+    { label: "Swimming Pool", icon: Bath },
+    { label: "Parking", icon: ParkingCircle },
+    { label: "Air Conditioning", icon: Snowflake },
+    { label: "Pet Friendly", icon: PawPrint },
+    { label: "Gym Access", icon: Dumbbell },
+    { label: "Free Breakfast", icon: Coffee },
+    { label: "Hot Tub", icon: Soup },
+    { label: "Kitchen", icon: BedDouble },
+    { label: "Washer/Dryer", icon: WashingMachine },
+    { label: "Smart TV", icon: Tv },
+    { label: "Free Parking", icon: Car },
+    { label: "Fireplace", icon: Flame },
+]

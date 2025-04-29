@@ -15,7 +15,7 @@ export const createPlaceSchema = z.object({
         .trim()
         .min(3, "Place location must be at least 3 characters long"),
 
-    pricePerNight: z.number({
+    pricePerNight: z.coerce.number({
         required_error: "Price per night is required",
         invalid_type_error: "Price per night must be a number"
     }).positive("Price must be a positive number"),
@@ -25,13 +25,14 @@ export const createPlaceSchema = z.object({
         { required_error: "At least one image is required" }
     ).min(1, "At least one image is required"),
 
+
     checkIn: z.string({ required_error: "Check-in time is required" })
         .regex(timeRegex, "Check-in time must be in HH:mm format (e.g., 14:00)"),
 
     checkOut: z.string({ required_error: "Check-out time is required" })
         .regex(timeRegex, "Check-out time must be in HH:mm format (e.g., 11:00)"),
 
-    maxGuests: z.number({
+    maxGuests: z.coerce.number({
         required_error: "Max guests is required",
         invalid_type_error: "Max guests must be a number"
     }).int("Max guests must be an integer")
@@ -39,7 +40,7 @@ export const createPlaceSchema = z.object({
 
     perks: z.array(
         z.string().min(3, "Each perk name must be at least 3 characters long")
-    ).optional().default([]),
+    ).optional()
 });
 
 
@@ -59,7 +60,7 @@ export const updatePlaceSchema = z.object({
         .min(3, "Location must be at least 3 characters long")
         .optional(),
 
-    pricePerNight: z.number()
+    pricePerNight: z.coerce.number()
         .positive("Price per night must be a positive number")
         .optional(),
 
@@ -76,12 +77,12 @@ export const updatePlaceSchema = z.object({
         .regex(timeRegex, "Check-out time must be in HH:mm format (e.g., 11:00)")
         .optional(),
 
-    maxGuests: z.number()
+    maxGuests: z.coerce.number()
         .int("Max guests must be an integer")
         .min(1, "At least one guest must be allowed")
         .optional(),
 
     perks: z.array(
         z.string().min(3, "Each perk name must be at least 3 characters long")
-    ).optional().default([]),
+    ).optional()
 })

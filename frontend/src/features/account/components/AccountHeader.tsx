@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/router/routes'
+import { Building, CalendarDays, User } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
 export default function AccountHeader() {
@@ -11,21 +12,30 @@ export default function AccountHeader() {
                         end
                         to={ROUTES.ACCOUNT.ROOT}
                     >
-                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>My profile</Button>}
+                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>
+                            <User />
+                            My profile
+                        </Button>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         to={ROUTES.ACCOUNT.BOOKINGS}
                     >
-                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>My Bookings</Button>}
+                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>
+                            <CalendarDays />
+                            My Bookings
+                        </Button>}
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         to={ROUTES.ACCOUNT.PLACES}
                     >
-                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>My accommodations</Button>}
+                        {({ isActive }) => <Button variant={isActive ? "destructive" : "outline"}>
+                            <Building />
+                            My accommodations
+                        </Button>}
                     </NavLink>
                 </li>
             </ul>
