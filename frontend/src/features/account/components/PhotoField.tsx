@@ -9,9 +9,10 @@ type PhotoProps = {
     remove: (index: number) => void;
     control: any;
     images: string[];
+    isPending: boolean
 };
 
-export default function PhotoField({ fields, append, remove, control, images }: PhotoProps) {
+export default function PhotoField({ fields, append, remove, control, images, isPending }: PhotoProps) {
     return (
         <div className="space-y-4">
             <div>
@@ -47,6 +48,7 @@ export default function PhotoField({ fields, append, remove, control, images }: 
                                     type="url"
                                     placeholder="Image URL"
                                     className="w-full"
+                                    readOnly={isPending}
                                 />
                                 <FormMessage />
                             </div>

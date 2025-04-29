@@ -60,18 +60,17 @@ const placeSchema = new Schema({
         required: true
     },
     checkIn: {
-        type: Number,
-        required: true,
-        min: 0,
-        max: 23
+        type: String,
+        required: true
     },
     checkOut: {
         type: String,
-        required: true
+        required: true,
     },
     maxGuests: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        min: 1,
     },
     perks: {
         type: [String],
