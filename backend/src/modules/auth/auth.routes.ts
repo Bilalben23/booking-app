@@ -1,26 +1,20 @@
 import { Router } from "express";
 import { validateSchema } from "@/middlewares/validateSchema.ts";
-import { loginSchema, registerSchema } from "./auth.validation.ts";
+import { loginSchema, registerSchema } from "./auth.validations.ts";
 import passport from "passport";
-import {
-    loginUser,
-    registerUser,
-    refreshToken,
-    googleCallback,
-    logoutUser
-} from "./auth.controller.ts";
+import * as authController from "./auth.controller.ts";
 import { authenticateJWT } from "@/middlewares/authenticateJwt.ts";
 
 
 const router = Router();
 
-router.post("/register", validateSchema(registerSchema), registerUser);
+router.post("/register", validateSchema(registerSchema), authController.registerUser);
 
-router.post("/login", validateSchema(loginSchema), loginUser);
+router.post("/login", validateSchema(loginSchema), authController.loginUser);
 
-router.get("/refresh-token", refreshToken);
+router.get("/refresh-token", authController.refreshToken);
 
-router.get("/logout", authenticateJWT, logoutUser);
+router.get("/logout", authenticateJWT, authController.logoutUser);
 
 router.get("/google", passport.authenticate("google", {
     scope: ["profile", "email"],
@@ -30,7 +24,7 @@ router.get("/google", passport.authenticate("google", {
 router.get(
     "/google/callback",
     passport.authenticate("google", { session: false, failureRedirect: "/" }),
-    googleCallback
+    authController.googleCallback
 )
 
 

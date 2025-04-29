@@ -7,7 +7,7 @@ export interface IUser extends Document {
     image?: string;
     provider: "local" | "google" | "facebook" | "apple";
     providerId?: string;
-    emailVerified?: boolean;
+    emailVerified?: boolean
 }
 
 

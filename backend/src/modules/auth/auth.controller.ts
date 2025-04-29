@@ -26,9 +26,10 @@ export const registerUser = async (req: Request, res: Response) => {
         })
 
     } catch (err: any) {
+        const errorMessage = err instanceof Error ? err.message : "Internal Server Error";
         res.status(err.status || 500).json({
             success: false,
-            message: (err as Error).message || "Internal Server Error"
+            message: errorMessage
         });
     }
 }
@@ -55,10 +56,11 @@ export const loginUser = async (req: Request, res: Response) => {
         })
 
     } catch (err: any) {
+        const errorMessage = err instanceof Error ? err.message : "Internal Server Error";
         res.status(err.status || 500).json({
             success: false,
-            message: (err as Error).message || 'Internal Server Error',
-        });
+            message: errorMessage
+        })
     }
 }
 
@@ -101,7 +103,6 @@ export const refreshToken = async (req: Request, res: Response) => {
         })
 
     } catch (err: any) {
-
         if (err.name === "TokenExpiredError" || err.message.includes("Invalid refresh token")) {
             res.status(400).json({
                 success: false,
@@ -110,9 +111,10 @@ export const refreshToken = async (req: Request, res: Response) => {
             return;
         }
 
+        const errorMessage = err instanceof Error ? err.message : "Internal Server Error";
         res.status(err.status || 500).json({
             success: false,
-            message: (err as Error).message || 'Internal Server Error',
+            message: errorMessage
         })
     }
 }
@@ -149,9 +151,10 @@ export const googleCallback = (req: Request, res: Response) => {
 
         res.redirect(`${ENV_VARS.FRONTEND_URL}/callback?accessToken=${accessToken}&user=${JSON.stringify(userData)}`);
     } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Internal Server Error";
         res.status(500).json({
             success: false,
-            message: (err as Error).message || "Internal Server Error",
+            message: errorMessage
         })
     }
 }
