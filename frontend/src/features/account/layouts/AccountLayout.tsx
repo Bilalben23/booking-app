@@ -5,7 +5,7 @@ export default function AccountLayout() {
     return (
         <>
             <AccountHeader />
-            <section className="my-5 shadow-md border rounded-sm p-5">
+            <section className="my-5 shadow-md border rounded-sm p-2 md:p-5">
                 <Outlet />
             </section>
         </>

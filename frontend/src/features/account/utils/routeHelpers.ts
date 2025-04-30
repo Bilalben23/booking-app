@@ -1,1 +1,1 @@
-export const buildShowPlacePath = (placeId: string) => `/account/places/${placeId}`;
+export const buildShowPlacePath = (placeId: string) => `/places/show/${placeId}`;

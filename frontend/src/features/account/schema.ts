@@ -95,7 +95,10 @@ export const placeSchema = z.object({
     location: z.string(),
     pricePerNight: z.number(),
     images: z.array(z.string().url()),
-    hostId: z.string(),
+    hostId: z.object({
+        _id: z.string(),
+        name: z.string()
+    }),
     checkIn: z.string(),
     checkOut: z.string(),
     maxGuests: z.number(),

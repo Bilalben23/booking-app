@@ -26,7 +26,8 @@ export class PlaceService {
 
     static async getPlaceByHost(hostId: Types.ObjectId) {
         try {
-            return await Place.find({ hostId });
+            return await Place.find({ hostId }).
+                populate("hostId", "name");
         } catch (error) {
             throw new Error("Error fetching places by host: " + (error as Error).message);
         }
@@ -34,7 +35,8 @@ export class PlaceService {
 
     static async getPlaceById(placeId: string) {
         try {
-            return await Place.findById(placeId);
+            return await Place.findById(placeId)
+                .populate("hostId", "name");
         } catch (error) {
             throw new Error("Error fetching place by id: " + (error as Error).message);
         }

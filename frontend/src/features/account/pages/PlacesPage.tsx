@@ -2,12 +2,12 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import usePlaces from '../hooks/usePlaces';
+import useHostPlaces from '../hooks/useHostPlaces';
 import { buildShowPlacePath } from '../utils/routeHelpers';
 import { Skeleton } from '@/components/ui/skeleton'; // Optional - adjust to your setup
 
 export default function PlacesPage() {
-    const { data, isLoading, isError, error } = usePlaces();
+    const { data, isLoading, isError, error } = useHostPlaces();
 
 
     if (isError) {

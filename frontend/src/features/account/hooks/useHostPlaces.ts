@@ -11,7 +11,7 @@ const placeResponseSchema = z.object({
 })
 
 
-export default function usePlaces() {
+export default function useHostPlaces() {
     const axios = useAxios();
 
     return useQuery({
