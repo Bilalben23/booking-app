@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import { ROUTES } from '@/router/routes'
+import { ROUTES } from '@/constants/routes'
 import { Building, CalendarDays, User } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 

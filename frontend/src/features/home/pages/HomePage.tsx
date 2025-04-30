@@ -1,4 +1,4 @@
-import { ROUTES } from '@/router/routes';
+import { ROUTES } from '@/constants/routes';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';

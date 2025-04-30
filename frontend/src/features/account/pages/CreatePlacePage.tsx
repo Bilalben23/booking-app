@@ -12,7 +12,7 @@ import useCreatePlace from '../hooks/useCreatePlace'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { BeatLoader } from 'react-spinners'
-import { ROUTES } from '@/router/routes'
+import { ROUTES } from '@/constants/routes'
 
 
 const defaultValues = {

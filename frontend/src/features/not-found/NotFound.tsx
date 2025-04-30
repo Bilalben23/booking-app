@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import airbnbLogoGray from "@/assets/logo-full-gray.svg";
-import { ROUTES } from '@/router/routes';
+import { ROUTES } from '@/constants/routes';
 import NotFoundGif from '@/assets/404-Airbnb_final.gif';
 
 

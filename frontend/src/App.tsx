@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import { ROUTES } from "./router/routes";
+import { ROUTES } from "./constants/routes";
 import Callback from "./features/auth/pages/Callback";
 import HomePage from "./features/home/pages/HomePage";
 import PersistLogin from "./components/PersistLogin";
