@@ -12,6 +12,8 @@ router.get("/", placeController.getAllPlaces);
 
 router.get("/host", placeController.getPlaceByHost);
 
+router.get("/:placeId", placeController.getPlaceById);
+
 router.patch("/:placeId", validateSchema(updatePlaceSchema), placeController.updatePlace);
 
 router.delete("/:placeId", placeController.deletePlace);

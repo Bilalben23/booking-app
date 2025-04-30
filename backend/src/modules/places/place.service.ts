@@ -24,7 +24,6 @@ export class PlaceService {
         }
     }
 
-
     static async getPlaceByHost(hostId: Types.ObjectId) {
         try {
             return await Place.find({ hostId });
@@ -33,6 +32,13 @@ export class PlaceService {
         }
     }
 
+    static async getPlaceById(placeId: string) {
+        try {
+            return await Place.findById(placeId);
+        } catch (error) {
+            throw new Error("Error fetching place by id: " + (error as Error).message);
+        }
+    }
 
     static async updatePlace(id: string, data: Partial<Omit<PlaceType, "hostId">>) {
         try {

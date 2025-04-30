@@ -71,6 +71,34 @@ export const getPlaceByHost = async (req: Request, res: Response) => {
 }
 
 
+export const getPlaceById = async (req: Request<{ placeId: string }>, res: Response) => {
+    try {
+        const place = await PlaceService.getPlaceById(req.params.placeId);
+
+        if (!place) {
+            res.status(404).json({
+                success: false,
+                message: "Place not found"
+            })
+            return;
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Place fetched successfully",
+            data: place
+        })
+
+    } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Internal Server Error";
+        res.status(500).json({
+            success: false,
+            message: errorMessage
+        })
+    }
+}
+
+
 export const updatePlace = async (req: Request<{ placeId: string }, {}, Partial<PlaceRequestBody>>, res: Response) => {
     try {
         const updatedPlace = await PlaceService.updatePlace(req.params.placeId, req.body);
