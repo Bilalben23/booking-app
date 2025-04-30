@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
 
 // @ts-ignore
 import 'swiper/css';
@@ -19,6 +18,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import usePlace from '../hooks/usePlace';
 import { formatDate } from '@/lib/helpers';
+import ShowPlaceSkeleton from '../skeletons/ShowPlaceSkeleton';
+import ErrorMessage from '@/components/ErrorMessage';
 
 export default function ShowPlacePage() {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
@@ -30,11 +31,12 @@ export default function ShowPlacePage() {
         window.scrollTo(0, 0);
     }, [])
 
+    if (isError || !place) return <ErrorMessage
+        message={error?.message || "Error loading place"}
+    />
 
-    if (isLoading) return <Skeleton className="w-full h-96 rounded-xl mx-auto my-10" />;
-    if (isError || !place) return <p className="text-center mt-8 text-red-500">
-        {error?.message || "Error loading place"}
-    </p>;
+    if (isLoading) return <ShowPlaceSkeleton />;
+
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
