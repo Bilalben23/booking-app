@@ -1,5 +1,5 @@
 import fullLogo from "@/assets/logo-full.svg";
-import { Search, User } from "lucide-react";
+import { LogOut, Search, User } from "lucide-react";
 import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -9,17 +9,24 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "../ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import { openDialog, setAuthMode } from "@/features/auth/state/authSlice";
+import { ROUTES } from "@/constants/routes";
+import useLogout from "@/features/account/hooks/useLogout";
 
 const Header = () => {
-    const { user } = useSelector((state: RootState) => state.auth);
+    const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
+    const { mutate: signOut, isPending } = useLogout();
+
+    const handleLogout = () => {
+        signOut();
+    }
+
 
     return (
         <header className="flex items-center justify-between py-2.5 px-12 shadow-sm">
@@ -67,36 +74,36 @@ const Header = () => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48" align="end" >
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem asChild>
-                            <button
-                                className="font-semibold w-full"
-                                onClick={() => {
-                                    dispatch(setAuthMode("register"));
-                                    dispatch(openDialog());
-                                }}>Sign up</button>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                            <button className="w-full" onClick={() => dispatch(openDialog())}>Log in</button>
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
-
-                    <DropdownMenuSeparator />
-
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem asChild disabled>
-                            <a href="/signup">Gift Card</a>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild disabled>
-                            <a href="/signin">Airbnb your home</a>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild disabled>
-                            <a href="/signin">Host an experience</a>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild disabled>
-                            <a href="/signin">Help center</a>
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
+                    {
+                        !isAuthenticated
+                            ? <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <button
+                                        className="font-semibold w-full"
+                                        onClick={() => {
+                                            dispatch(setAuthMode("register"));
+                                            dispatch(openDialog());
+                                        }}>Sign up</button>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <button className="w-full" onClick={() => dispatch(openDialog())}>Log in</button>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            : <DropdownMenuGroup>
+                                <DropdownMenuItem asChild>
+                                    <Link to={ROUTES.ACCOUNT.ROOT} className="flex items-center gap-2">
+                                        <User className="w-4 h-4" />
+                                        My Account
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <button onClick={handleLogout} className="flex items-center gap-2 w-full text-left" disabled={isPending}>
+                                        <LogOut className="w-4 h-4" />
+                                        Logout
+                                    </button>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                    }
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>

@@ -10,6 +10,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { buildShowPlacePath } from "@/lib/helpers";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
     const { data: places, isLoading, isError } = usePlaces();
@@ -45,11 +46,14 @@ export default function HomePage() {
                             <h2 className="text-lg font-semibold text-gray-800">{place.name}</h2>
                             <p className="text-sm text-gray-500">{place.location}</p>
                             <Badge variant="secondary">${place.pricePerNight} / night</Badge>
+
                             <Link
                                 to={buildShowPlacePath(place._id)}
-                                className="block text-indigo-600 text-sm mt-2 hover:underline"
+                                className="block"
                             >
-                                View Details
+                                <Button variant="link" className="text-blue-500">
+                                    View Details
+                                </Button>
                             </Link>
                         </div>
                     </div>
