@@ -32,11 +32,12 @@ export default function ShowPlacePage() {
         window.scrollTo(0, 0);
     }, [])
 
+    if (isLoading) return <ShowPlaceSkeleton />;
+
     if (isError || !place) return <ErrorMessage
         message={error?.message || "Error loading place"}
     />
 
-    if (isLoading) return <ShowPlaceSkeleton />;
 
 
     return (
@@ -71,6 +72,7 @@ export default function ShowPlacePage() {
                             src={img}
                             alt={`Image ${idx + 1}`}
                             className="w-full h-[450px] object-cover rounded-xl"
+                            loading='lazy'
                         />
                     </SwiperSlide>
                 ))}

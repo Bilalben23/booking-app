@@ -36,6 +36,7 @@ const Header = () => {
                         src={fullLogo}
                         alt="Airbnb Logo"
                         className="w-24"
+                        loading="lazy"
                     />
                 </Link>
             </div>

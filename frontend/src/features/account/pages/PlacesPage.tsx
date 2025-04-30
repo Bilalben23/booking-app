@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useHostPlaces from '../hooks/useHostPlaces';
 import { Skeleton } from '@/components/ui/skeleton'; // Optional - adjust to your setup
 import { buildShowPlacePath } from '@/lib/helpers';
+import { useEffect } from 'react';
 
 export default function PlacesPage() {
     const { data, isLoading, isError, error } = useHostPlaces();
@@ -22,6 +23,10 @@ export default function PlacesPage() {
     }
 
     const hasNoPlaces = data?.length === 0;
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div>

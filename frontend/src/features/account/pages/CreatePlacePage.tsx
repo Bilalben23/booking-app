@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { BeatLoader } from 'react-spinners'
 import { ROUTES } from '@/constants/routes'
+import { useEffect } from 'react'
 
 
 const defaultValues = {
@@ -56,6 +57,9 @@ export default function CreatePlacePage() {
         })
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className='p-5 md:p-10'>

@@ -6,6 +6,8 @@ import { RootState } from '@/store/store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { LogOut, User } from 'lucide-react';
 import { Verified } from 'lucide-react';
+import { useEffect } from 'react';
+
 export default function ProfilePage() {
     const { user } = useSelector((state: RootState) => state.auth);
     const { mutate: signOut, isPending } = useLogout();
@@ -14,6 +16,11 @@ export default function ProfilePage() {
     const handleLogout = () => {
         signOut();
     }
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
 
     return (
         <div className='flex flex-col gap-y-5'>

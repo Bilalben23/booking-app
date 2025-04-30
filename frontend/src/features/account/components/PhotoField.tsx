@@ -29,6 +29,7 @@ export default function PhotoField({ fields, append, remove, control, images, is
                                 src={image}
                                 alt={`Uploaded photo ${index + 1}`}
                                 className="w-24 h-24 object-cover rounded border"
+                                loading='lazy'
                             />
                         ) : null
                     )}
