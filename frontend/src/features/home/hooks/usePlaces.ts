@@ -11,13 +11,13 @@ const placeResponseSchema = z.object({
 })
 
 
-export default function useHostPlaces() {
+export default function usePlaces() {
     const axios = useAxios();
 
     return useQuery({
         queryKey: ["places"],
         queryFn: async () => {
-            const { data } = await axios.get("v1/places/host");
+            const { data } = await axios.get("v1/places");
 
             const parsed = placeResponseSchema.safeParse(data);
 

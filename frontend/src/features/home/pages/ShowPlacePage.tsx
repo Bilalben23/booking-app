@@ -1,7 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
-import usePlace from '../hooks/usePlace';
-import { formatDate } from '../utils/formatDate';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperClass } from 'swiper/types';
@@ -19,22 +17,32 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 // @ts-ignore
 import 'swiper/css/thumbs';
+import usePlace from '../hooks/usePlace';
+import { formatDate } from '@/lib/helpers';
 
 export default function ShowPlacePage() {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
     const { placeId } = useParams<{ placeId: string }>();
-    const { data: place, isLoading, isError } = usePlace(placeId);
+    const { data: place, isLoading, isError, error } = usePlace(placeId);
+
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [])
+
 
     if (isLoading) return <Skeleton className="w-full h-96 rounded-xl mx-auto my-10" />;
-    if (isError || !place) return <p className="text-center mt-8 text-red-500">Error loading place</p>;
+    if (isError || !place) return <p className="text-center mt-8 text-red-500">
+        {error?.message || "Error loading place"}
+    </p>;
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8 space-y-10">
             {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">{place.name}</h1>
-                    <p className="text-muted-foreground">{place.location}</p>
+                    <h1 className="text-3xl font-bold text-gray-900 line-clamp-2">{place.name}</h1>
+                    <p className="text-muted-foreground line-clamp-2">{place.location}</p>
                 </div>
                 <Badge variant="outline">
                     ${place.pricePerNight} / night

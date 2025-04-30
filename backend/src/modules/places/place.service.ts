@@ -18,7 +18,7 @@ export class PlaceService {
 
     static async getAllPlaces() {
         try {
-            return await Place.find();
+            return await Place.find().populate("hostId", "name");
         } catch (error) {
             throw new Error("Error fetching places: " + (error as Error).message);
         }

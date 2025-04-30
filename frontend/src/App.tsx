@@ -11,7 +11,7 @@ import ProfilePage from "./features/account/pages/ProfilePage";
 import BookingsPage from "./features/account/pages/BookingsPage";
 import PlacesPage from "./features/account/pages/PlacesPage";
 import CreatePlacePage from "./features/account/pages/CreatePlacePage";
-import ShowPlacePage from "./features/account/pages/ShowPlacePage";
+import ShowPlacePage from "./features/home/pages/ShowPlacePage";
 
 
 const App = () => {
@@ -30,7 +30,7 @@ const App = () => {
                 <Route path={ROUTES.ACCOUNT.PLACES} element={<PlacesPage />} />
                 <Route path={ROUTES.ACCOUNT.NEW_PLACE} element={<CreatePlacePage />} />
               </Route>
-              
+
               <Route path={ROUTES.SHOW_PLACE} element={<ShowPlacePage />} />
 
             </Route>

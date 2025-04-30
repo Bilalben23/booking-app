@@ -122,4 +122,14 @@
   body {
     @apply bg-background text-foreground;
   }
+
+
+}
+
+@layer utilities {
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 33px !important;
+  }
 }

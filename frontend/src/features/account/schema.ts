@@ -86,24 +86,3 @@ export const updatePlaceSchema = z.object({
         z.string().min(3, "Each perk name must be at least 3 characters long")
     ).optional()
 })
-
-
-export const placeSchema = z.object({
-    _id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    location: z.string(),
-    pricePerNight: z.number(),
-    images: z.array(z.string().url()),
-    hostId: z.object({
-        _id: z.string(),
-        name: z.string()
-    }),
-    checkIn: z.string(),
-    checkOut: z.string(),
-    maxGuests: z.number(),
-    perks: z.array(z.string()),
-    createdAt: z.string(),
-    updatedAt: z.string(),
-    __v: z.number()
-})

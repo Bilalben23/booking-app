@@ -3,8 +3,8 @@ import { ROUTES } from '@/constants/routes';
 import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useHostPlaces from '../hooks/useHostPlaces';
-import { buildShowPlacePath } from '../utils/routeHelpers';
 import { Skeleton } from '@/components/ui/skeleton'; // Optional - adjust to your setup
+import { buildShowPlacePath } from '@/lib/helpers';
 
 export default function PlacesPage() {
     const { data, isLoading, isError, error } = useHostPlaces();

@@ -1,7 +1,7 @@
 import { useAxios } from '@/hooks/useAxios'
+import { placeSchema } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
 import { z } from 'zod';
-import { placeSchema } from '../schema';
 
 
 const placeResponseSchema = z.object({
