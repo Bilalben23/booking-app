@@ -7,6 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import usePlace from '../hooks/usePlace';
+import { formatDate } from '@/lib/helpers';
+import ShowPlaceSkeleton from '../skeletons/ShowPlaceSkeleton';
+import ErrorMessage from '@/components/ErrorMessage';
 
 // @ts-ignore
 import 'swiper/css';
@@ -16,10 +20,7 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 // @ts-ignore
 import 'swiper/css/thumbs';
-import usePlace from '../hooks/usePlace';
-import { formatDate } from '@/lib/helpers';
-import ShowPlaceSkeleton from '../skeletons/ShowPlaceSkeleton';
-import ErrorMessage from '@/components/ErrorMessage';
+
 
 export default function ShowPlacePage() {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
