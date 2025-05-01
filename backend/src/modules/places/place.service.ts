@@ -1,12 +1,9 @@
-import { z } from "zod";
 import { Place } from "./place.model.ts";
-import { createPlaceSchema } from "./place.validations.ts";
 import { Types } from "mongoose";
-
-type PlaceType = z.infer<typeof createPlaceSchema> & { hostId: Types.ObjectId };
+import type { IPlace } from "./place.types.ts";
 
 export class PlaceService {
-    static async createPlace(data: PlaceType) {
+    static async createPlace(data: IPlace) {
         try {
             const place = new Place(data);
             return await place.save();
@@ -42,7 +39,7 @@ export class PlaceService {
         }
     }
 
-    static async updatePlace(id: string, data: Partial<Omit<PlaceType, "hostId">>) {
+    static async updatePlace(id: string, data: Partial<Omit<IPlace, "hostId">>) {
         try {
             return await Place.findByIdAndUpdate(id, data, { new: true });
         } catch (error) {

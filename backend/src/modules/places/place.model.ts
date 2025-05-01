@@ -1,20 +1,7 @@
-import { Schema, Document, Types, model } from "mongoose";
+import { Schema, Document, model } from "mongoose";
+import type { IPlace } from "./place.types.ts";
 
-export interface IPlace extends Document {
-    name: string;
-    description: string;
-    location: string;
-    pricePerNight: number;
-    images: string[];
-    hostId: Types.ObjectId;
-    checkIn: string;
-    checkOut: string;
-    maxGuests: number;
-    perks: {
-        name: string;
-        available: boolean
-    }[];
-}
+export interface PlaceDocument extends IPlace, Document { }
 
 const predefinedPerks = [
     "Free WiFi",
@@ -32,8 +19,7 @@ const predefinedPerks = [
     "Fireplace"
 ];
 
-
-const placeSchema = new Schema({
+const placeSchema = new Schema<PlaceDocument>({
     name: {
         type: String,
         required: true
@@ -79,4 +65,4 @@ const placeSchema = new Schema({
 }, { timestamps: true });
 
 
-export const Place = model<IPlace>("Place", placeSchema);
+export const Place = model<PlaceDocument>("Place", placeSchema);
