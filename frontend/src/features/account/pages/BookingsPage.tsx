@@ -10,27 +10,48 @@ import {
     AlertDialogDescription,
     AlertDialogCancel,
     AlertDialogAction,
+    AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import usePlaceBooking from '../hooks/usePlaceBooking';
 import ErrorMessage from '@/components/ErrorMessage';
 import { buildShowPlacePath, formatDate } from '@/lib/helpers';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useDeleteBooking from '../hooks/useDeleteBooking';
+import toast from 'react-hot-toast';
+import { ROUTES } from '@/constants/routes';
 
 export default function BookingsPage() {
     const { data: bookingPlaces, isLoading, isError, error } = usePlaceBooking();
     const [deleteId, setDeleteId] = useState<string | null>(null);
+    const [editId, setEditId] = useState<string | null>(null); // NEW for edit dialog
+    const { mutate: deleteBooking, isPending } = useDeleteBooking();
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
-
-    const handleDelete = (id: string) => {
-        // TODO: Call delete API
-        console.log(`Delete booking with id: ${id}`);
-        setDeleteId(null);
+    const handleDeleteAndRebook = (id: string) => {
+        deleteBooking(id, {
+            onSuccess: () => {
+                toast.success('Booking deleted successfully');
+                setEditId(null);
+                navigate(ROUTES.ACCOUNT.NEW_PLACE);
+            },
+            onError: () => {
+                toast.error('Failed to delete booking');
+            }
+        });
     };
 
-    // Function to calculate the number of days
+    const handleDelete = (id: string) => {
+        deleteBooking(id, {
+            onSuccess: () => {
+                toast.success('Booking deleted successfully');
+                setDeleteId(null);
+            },
+            onError: () => {
+                toast.error('Failed to delete booking');
+            }
+        });
+    };
+
     const calculateBookingDays = (checkIn: string, checkOut: string) => {
         const checkInDate = new Date(checkIn);
         const checkOutDate = new Date(checkOut);
@@ -38,14 +59,16 @@ export default function BookingsPage() {
         return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     };
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     if (isLoading) {
         return <div className="p-8 text-center text-lg">Loading your bookings...</div>;
     }
 
     if (isError) {
-        return <ErrorMessage
-            message={error?.message || "Error loading place"}
-        />
+        return <ErrorMessage message={error?.message || "Error loading place"} />;
     }
 
     return (
@@ -58,23 +81,17 @@ export default function BookingsPage() {
                         const pricePerNight = booking.totalPrice / numberOfDays;
 
                         return (
-                            <Card
-                                key={booking._id}
-                                className="flex flex-col shadow rounded-lg pt-0"
-                            >
+                            <Card key={booking._id} className="flex flex-col shadow rounded-lg pt-0">
                                 <div className="relative">
-
                                     <img
                                         src={booking.placeId.images[0]}
                                         alt={booking.placeId.name}
                                         className="w-full h-56 object-cover rounded-t-lg"
                                     />
-
                                     <div className="absolute top-0 left-0 p-4 bg-gradient-to-b from-transparent to-black opacity-70 w-full h-full rounded-t-lg">
                                         <div className="text-white font-bold text-xl line-clamp-1">{booking.placeId.name}</div>
                                         <div className="text-white text-sm mt-1 line-clamp-1">{booking.placeId.location}</div>
                                     </div>
-
                                     <div className="absolute bottom-4 right-4">
                                         <Link to={buildShowPlacePath(booking.placeId._id)}>
                                             <Button variant="secondary" size="sm">
@@ -112,17 +129,34 @@ export default function BookingsPage() {
                                             <span className="text-lg">${booking.totalPrice.toFixed(2)} USD</span>
                                         </div>
                                         <div className="flex gap-3">
-                                            <Button
-                                                variant="outline"
-                                                onClick={() => console.log(`Edit booking ${booking._id}`)}
-                                            >
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                onClick={() => setDeleteId(booking._id)}
-                                            >
-                                                Delete
+                                            {/* EDIT DIALOG */}
+                                            <AlertDialog open={editId === booking._id} onOpenChange={(open) => setEditId(open ? booking._id : null)}>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button variant="outline">Edit</Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Editing Not Available</AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            Editing an existing booking is not supported at this time.
+                                                            <br />
+                                                            If you want to make changes, please delete this booking and create a new one.
+                                                            <br />
+                                                            Are you sure you want to continue?
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => handleDeleteAndRebook(booking._id)}>
+                                                            Delete & Rebook
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+
+                                            {/* DELETE BUTTON */}
+                                            <Button variant="destructive" onClick={() => setDeleteId(booking._id)} disabled={isPending}>
+                                                {isPending ? "Deleting..." : "Delete"}
                                             </Button>
                                         </div>
                                     </div>
@@ -143,7 +177,10 @@ export default function BookingsPage() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => handleDelete(deleteId!)}>Delete</AlertDialogAction>
+                        <AlertDialogAction
+                            onClick={() => deleteId && handleDelete(deleteId)}
+                            disabled={isPending}
+                        >{isPending ? "Deleting..." : "Delete"}</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>
