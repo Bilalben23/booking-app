@@ -95,7 +95,7 @@ export const createBooking = async (req: Request<{}, {}, Omit<IBooking, "userId"
         res.status(201).json({
             success: true,
             message: "Booking created successfully",
-            data: createdBooking
+            data: createdBooking._id
         })
 
     } catch (err) {

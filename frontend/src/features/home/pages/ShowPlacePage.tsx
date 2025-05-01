@@ -20,13 +20,14 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 // @ts-ignore
 import 'swiper/css/thumbs';
+import { BookPlaceDialog } from '../components/BookPlaceDialog';
 
 
 export default function ShowPlacePage() {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { placeId } = useParams<{ placeId: string }>();
     const { data: place, isLoading, isError, error } = usePlace(placeId);
-
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -37,7 +38,6 @@ export default function ShowPlacePage() {
     if (isError || !place) return <ErrorMessage
         message={error?.message || "Error loading place"}
     />
-
 
 
     return (
@@ -154,9 +154,12 @@ export default function ShowPlacePage() {
                                 <span className="text-primary">${place.pricePerNight}</span>
                             </div>
                         </div>
-                        <Button className="w-full" variant="destructive">
-                            Book Now
-                        </Button>
+                        <BookPlaceDialog
+                            placeId={place._id}
+                            maxGuests={place.maxGuests}
+                            placeName={place.name}
+                            pricePerNight={place.pricePerNight}
+                        />
                     </CardContent>
                 </Card>
             </div>

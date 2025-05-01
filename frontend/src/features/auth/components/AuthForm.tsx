@@ -1,5 +1,3 @@
-// components/auth/AuthForm.tsx
-import { useState } from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import SocialAuth from "./SocialAuth";
@@ -16,7 +14,7 @@ const AuthForm = () => {
     const toggleAuthMode = () => {
         dispatch(setAuthMode(authMode === "login" ? "register" : "login"))
     }
- 
+
     return (
         <div className="space-y-3">
             {isLogin ? <LoginForm /> : <RegisterForm />}

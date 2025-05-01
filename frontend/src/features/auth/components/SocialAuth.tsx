@@ -2,13 +2,7 @@ import facebookIcon from "@/assets/facebook-icon.svg";
 import appleIcon from "@/assets/apple-icon.svg";
 import googleIcon from "@/assets/google-icon.svg";
 import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store/store";
-
 const SocialAuth = () => {
-
-    const dispatch = useDispatch<AppDispatch>();
-
 
     const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
         const backendUrl = import.meta.env.VITE_BACKEND_URL;

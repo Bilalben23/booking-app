@@ -11,8 +11,8 @@ const MainLayout = () => {
                 <Outlet />
             </main>
             <Footer />
-            <AuthDialog />
 
+            <AuthDialog />
         </>
     );
 }

@@ -42,9 +42,7 @@ export default function CreatePlacePage() {
     const { mutate: createPlace, isPending } = useCreatePlace();
     const navigate = useNavigate();
 
-
     function onSubmit(values: z.infer<typeof createPlaceSchema>) {
-        console.log(values);
         createPlace(values, {
             onSuccess: () => {
                 toast.success("Place created successfully!");

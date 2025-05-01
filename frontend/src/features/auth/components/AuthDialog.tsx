@@ -1,6 +1,7 @@
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { closeDialog } from "../state/authSlice";
+import AuthForm from "./AuthForm";
 import {
     Dialog,
     DialogContent,
@@ -8,7 +9,6 @@ import {
     DialogHeader,
     DialogTitle
 } from "@/components/ui/dialog";
-import AuthForm from "./AuthForm";
 
 const AuthDialog = () => {
     const { isDialogOpen } = useSelector((state: RootState) => state.auth);
