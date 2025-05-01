@@ -3,10 +3,9 @@ import type { IBooking } from "./booking.types.ts";
 
 
 export class BookingService {
-    static async getAllBookings() {
-        return await Booking.find()
-            .populate("placeId")
-            .populate("userId")
+    static async getAllBookings(userId: string) {
+        return await Booking.find({ userId })
+            .populate("placeId");
     }
 
     static async getBookingById(id: string) {

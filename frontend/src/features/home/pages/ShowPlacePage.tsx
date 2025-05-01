@@ -1,10 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import type { Swiper as SwiperClass } from 'swiper/types';
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import usePlace from '../hooks/usePlace';
@@ -25,7 +24,6 @@ import { BookPlaceDialog } from '../components/BookPlaceDialog';
 
 export default function ShowPlacePage() {
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const { placeId } = useParams<{ placeId: string }>();
     const { data: place, isLoading, isError, error } = usePlace(placeId);
 
@@ -63,7 +61,11 @@ export default function ShowPlacePage() {
                 spaceBetween={10}
                 navigation
                 thumbs={{ swiper: thumbsSwiper }}
-                modules={[FreeMode, Navigation, Thumbs]}
+                autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                }}
+                modules={[FreeMode, Navigation, Thumbs, Autoplay]}
                 className="rounded-xl overflow-hidden"
             >
                 {place.images.map((img, idx) => (

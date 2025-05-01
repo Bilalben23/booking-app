@@ -10,6 +10,10 @@ import { useEffect } from 'react';
 export default function PlacesPage() {
     const { data, isLoading, isError, error } = useHostPlaces();
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
 
     if (isError) {
         return (
@@ -24,9 +28,6 @@ export default function PlacesPage() {
 
     const hasNoPlaces = data?.length === 0;
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
 
     return (
         <div>

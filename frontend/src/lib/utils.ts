@@ -26,3 +26,5 @@ export const placeSchema = z.object({
   updatedAt: z.string(),
   __v: z.number()
 })
+
+

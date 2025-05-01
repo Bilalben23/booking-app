@@ -8,7 +8,8 @@ import { PlaceService } from "../places/place.service.ts";
 
 export const getAllBookings = async (req: Request, res: Response) => {
     try {
-        const bookings = await BookingService.getAllBookings();
+        const userId = (req.user as IUser)._id as Types.ObjectId;
+        const bookings = await BookingService.getAllBookings(userId.toString());
 
         res.status(200).json({
             success: true,

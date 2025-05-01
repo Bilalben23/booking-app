@@ -35,7 +35,7 @@ export default function useBookPlace() {
             return parsed.data;
         },
         onSuccess: () => {
-            // queryClient.invalidateQueries({ queryKey: ["bookings"] })
+            queryClient.invalidateQueries({ queryKey: ["bookings"] })
         }
     })
 
