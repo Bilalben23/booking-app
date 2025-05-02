@@ -12,6 +12,7 @@ import BookingsPage from "./features/account/pages/BookingsPage";
 import PlacesPage from "./features/account/pages/PlacesPage";
 import CreatePlacePage from "./features/account/pages/CreatePlacePage";
 import ShowPlacePage from "./features/home/pages/ShowPlacePage";
+import EditPlacePage from "./features/account/pages/EditPlacePage";
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
               </Route>
 
               <Route path={ROUTES.SHOW_PLACE} element={<ShowPlacePage />} />
+              <Route path={ROUTES.EDIT_PLACE} element={<EditPlacePage />} />
 
             </Route>
 
