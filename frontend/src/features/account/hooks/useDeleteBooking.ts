@@ -7,7 +7,7 @@ export default function useDeleteBooking() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationKey: ["delete-booking"],
+        mutationKey: ["deleteBooking"],
         mutationFn: async (id: string) => {
             await axios.delete(`/v1/bookings/${id}`);
         },

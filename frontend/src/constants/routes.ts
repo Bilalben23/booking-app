@@ -7,6 +7,7 @@ export const ROUTES = {
         NEW_PLACE: "/account/places/new",
     },
     SHOW_PLACE: "/places/show/:placeId",
+    EDIT_PLACE: "/places/edit/:placeId",
     CALLBACK: "/callback"
 } as const
 

@@ -19,7 +19,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import useDeleteBooking from '../hooks/useDeleteBooking';
 import toast from 'react-hot-toast';
 import { ROUTES } from '@/constants/routes';
-import { Skeleton } from '@/components/ui/skeleton';
 import BookingSkeleton from '../skeletons/BookingSkeleton';
 
 export default function BookingsPage() {

@@ -15,7 +15,7 @@ export default function useHostPlaces() {
     const axios = useAxios();
 
     return useQuery({
-        queryKey: ["places"],
+        queryKey: ["hostPlaces"],
         queryFn: async () => {
             const { data } = await axios.get("v1/places/host");
 

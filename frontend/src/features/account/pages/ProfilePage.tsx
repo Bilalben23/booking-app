@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import useLogout from '../hooks/useLogout';
 import { Button } from '@/components/ui/button';
 import { BeatLoader } from 'react-spinners';
@@ -51,9 +50,7 @@ export default function ProfilePage() {
                         <p className='text-sm mb-4'>
                             This user has not provided a bio yet. You can add a short description here.
                         </p>
-                        <Link to="/edit-profile">
-                            <Button variant="outline" size="sm">Edit Profile</Button>
-                        </Link>
+                        <Button variant="outline" size="sm" disabled>Edit Profile</Button>
                     </div>
 
                     <div className='mt-6 flex justify-end'>
@@ -75,6 +72,6 @@ export default function ProfilePage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
