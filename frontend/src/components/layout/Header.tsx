@@ -1,4 +1,4 @@
-import fullLogo from "@/assets/logo-full.svg";
+import fullLogo from "@/assets/booking-logo.svg";
 import { LogOut, Search, User, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
@@ -28,16 +28,17 @@ const Header = () => {
 
     return (
         <header className="flex items-center justify-between py-2.5 px-4 md:px-12 shadow-sm">
-            <div>
-                <Link to="/">
-                    <img
-                        src={fullLogo}
-                        alt="Airbnb Logo"
-                        className="w-20 md:w-24"
-                        loading="lazy"
-                    />
-                </Link>
-            </div>
+            <Link to="/" className="flex items-center space-x-2">
+                <img
+                    src={fullLogo}
+                    alt="Booking.com Logo"
+                    className="h-8 sm:h-10 w-auto object-contain"
+                />
+                <span className="text-xl sm:text-2xl font-bold text-blue-600 hover:text-blue-800 transition-colors duration-300">
+                    Booking<span className="text-neutral-900">.com</span>
+                </span>
+            </Link>
+
 
             {/* Search bar (hidden on small screens) */}
             <div className="hidden md:flex items-center shadow-md rounded-full space-x-4 px-3 py-1.5 border">

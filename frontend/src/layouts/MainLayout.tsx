@@ -1,7 +1,7 @@
 import Header from "@/components/layout/Header";
 import AuthDialog from "@/features/auth/components/AuthDialog";
 import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
+import Footer from "../components/layout/Footer";
 
 const MainLayout = () => {
     return (

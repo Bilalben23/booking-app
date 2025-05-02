@@ -19,6 +19,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import useDeleteBooking from '../hooks/useDeleteBooking';
 import toast from 'react-hot-toast';
 import { ROUTES } from '@/constants/routes';
+import { Skeleton } from '@/components/ui/skeleton';
+import BookingSkeleton from '../skeletons/BookingSkeleton';
 
 export default function BookingsPage() {
     const { data: bookingPlaces, isLoading, isError, error } = usePlaceBooking();
@@ -63,18 +65,18 @@ export default function BookingsPage() {
         window.scrollTo(0, 0);
     }, []);
 
-    if (isLoading) {
-        return <div className="p-8 text-center text-lg">Loading your bookings...</div>;
-    }
 
     if (isError) {
-        return <ErrorMessage message={error?.message || "Error loading place"} />;
+        return <ErrorMessage
+            message={error?.message || "Error loading place"} />;
     }
 
     return (
         <div className="max-w-7xl mx-auto p-6">
             <h1 className="text-4xl font-bold mb-8 text-center text-gray-900">Your Bookings</h1>
-            {bookingPlaces && bookingPlaces.length > 0 ? (
+            {isLoading ? (
+                <BookingSkeleton />
+            ) : bookingPlaces && bookingPlaces.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {bookingPlaces.map((booking) => {
                         const numberOfDays = calculateBookingDays(booking.checkIn, booking.checkOut);

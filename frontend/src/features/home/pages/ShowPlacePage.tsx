@@ -67,6 +67,7 @@ export default function ShowPlacePage() {
                 }}
                 modules={[FreeMode, Navigation, Thumbs, Autoplay]}
                 className="rounded-xl overflow-hidden"
+
             >
                 {place.images.map((img, idx) => (
                     <SwiperSlide key={idx}>
